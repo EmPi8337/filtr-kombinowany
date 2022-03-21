@@ -6,11 +6,11 @@ import matplotlib.pyplot as plt
 
 def main():
     #True for ABS False for square root(euklides metod)
-    normalization = False
+    normalization = True
 
 
     #load a image
-    image_name='./test-easy.png'
+    image_name='./lena_std.tif'
     src=cv.imread(image_name,cv.IMREAD_COLOR)
 
 
@@ -20,12 +20,12 @@ def main():
     out=Filter.sobel(src,normalization)
 
 
-    cv.imshow('okno',out)
-    cv.waitKey(0)
-    cv.destroyAllWindows()
+    #cv.imshow('okno',out)
+    #cv.waitKey(0)
+    #cv.destroyAllWindows()
 
-    #plt.imshow(out,cmap='gray')
-    #plt.show()
+    plt.imshow(out,cmap='gray')
+    plt.show()
 
 
 main()
