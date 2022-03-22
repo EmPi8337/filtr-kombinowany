@@ -1,18 +1,8 @@
-from tkinter import Tk     # from tkinter import Tk for Python 3.x
-from tkinter.filedialog import askopenfilename
+from matplotlib import pyplot as plt
 
 
-
-def open_file():
-
-    filetypes = (
-        ('png files', '*.png'),
-        ('jpeg files','*.jpg'),
-        ('bmp files','*.bmp'),
-        ('tif files', '*.tif','*.tiff'),
-
-    )
-    Tk().withdraw()  # we don't want a full GUI, so keep the root window from appearing
-    filename = askopenfilename(filetypes==filetypes)  # show an "Open" dialog box and return the path to the selected file
-
-    return filename
+def show(combinated_image: int, grad_v_left: int, grad_h_up: int):
+    plt.imshow(combinated_image, cmap='gray')
+    plt.imshow(grad_v_left, cmap='gray')
+    plt.imshow(grad_h_up, cmap='gray')
+    plt.show()
