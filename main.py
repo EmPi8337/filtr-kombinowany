@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 def main():
     #True for ABS False for square root(euklides metod)
-    normalization = True
+    normalization = False
 
 
     #load a image
@@ -17,7 +17,7 @@ def main():
 
 
 
-    out=Filter.sobel(src,normalization)
+    out=Filter.sobel_better(src,normalization)
 
 
     #cv.imshow('okno',out)
