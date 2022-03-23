@@ -1,6 +1,6 @@
 import cv2 as cv
 import numpy as np
-from cv2 import COLOR_BGR2GRAY
+from cv2 import COLOR_BGR2GRAY, CV_64F
 
 
 def prepare(src: int):
@@ -86,7 +86,7 @@ def roberts(src: int, normalization: bool):
 
 def sobel(src: int, normalization: bool):
     # get grayscale image with reduced noise
-    img = filter.prepare(src)
+    img = prepare(src)
     # initialize kernels
     vertical = np.array([[-1, 0, 1],
                          [-2, 0, 2],
@@ -96,10 +96,10 @@ def sobel(src: int, normalization: bool):
                            [1, 2, 1]], dtype=np.int8)
 
     # compute vertical gradients from left to right and vice versa
-    grad_v_left = cv.filter2D(img, -1, vertical, borderType=cv.BORDER_DEFAULT)
+    grad_v_left = cv.filter2D(img, CV_64F, vertical, borderType=cv.BORDER_DEFAULT)
     grad_v_right = cv.filter2D(img, -1, np.fliplr(vertical), borderType=cv.BORDER_DEFAULT)
     # compute horizontal gradients from up to down and vice versa
-    grad_h_up = cv.filter2D(img, -1, horizontal, borderType=cv.BORDER_DEFAULT)
+    grad_h_up = cv.filter2D(img, CV_64F, horizontal, borderType=cv.BORDER_DEFAULT)
     grad_h_down = cv.filter2D(img, -1, np.flipud(horizontal), borderType=cv.BORDER_DEFAULT)
 
     """
@@ -113,8 +113,10 @@ def sobel(src: int, normalization: bool):
 
     # normalize image
     if normalization == False:
+        # slower but better results
         combinated_image = euklides(grad_v_left, grad_h_up)
     elif normalization == True:
+        # much faster but less accurate
         combinated_image = sum_of_abs(grad_v_left, grad_h_up)
 
     return combinated_image, grad_v_left, grad_h_up
@@ -122,7 +124,8 @@ def sobel(src: int, normalization: bool):
 
 def euklides(grad_v_left: int, grad_h_up: int):
     # compute sqrt of vertical and horizontal gradients
-    grad_magnitude = cv.addWeighted(grad_v_left, 1, grad_h_up, 1, 0)
+    #grad_magnitude = cv.addWeighted(grad_v_left, 1, grad_h_up, 1, 0)
+    grad_magnitude = cv.magnitude(grad_v_left, grad_h_up)
 
     return grad_magnitude
 

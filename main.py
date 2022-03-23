@@ -19,18 +19,18 @@ def menu():
 
 def main():
 
-    select = menu()
+    #select = menu()
 
     # True for ABS False for square root(euklides metod)
-    normalization = select.test_image
+    #normalization = select.test_image
 
     # load a image
-    image_name = './'+select.normalization_metod
-    src = cv.imread(image_name, cv.IMREAD_COLOR)
+    #image_name = './'+select.normalization_metod
+    src = cv.imread("lena_std.tif", cv.IMREAD_COLOR)
 
-    out = Filter.sobel(src, normalization)
+    x,y,z = Filter.sobel(src, True)
 
-    display.show(out.combinated_image, out.grad_v_left, out.grad_h_up)
+    display.show(x, y, z)
 
 
 
