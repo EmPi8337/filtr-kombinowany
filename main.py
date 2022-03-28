@@ -26,9 +26,11 @@ def main():
 
     # load a image
     #image_name = './'+select.normalization_metod
-    src = cv.imread("lena_std.tif", cv.IMREAD_COLOR)
+    path = "./images/architecture/"
+    name = "tarnow_main_square.bmp"
+    src = cv.imread(path+name, cv.IMREAD_COLOR)
 
-    x,y,z = Filter.sobel(src, True)
+    x,y,z = Filter.sobel(src, False)
 
     display.show(x, y, z)
 
