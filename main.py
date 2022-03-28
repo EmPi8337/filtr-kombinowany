@@ -21,6 +21,7 @@ def main():
 
     #select = menu()
 
+
     # True for ABS False for square root(euklides metod)
     #normalization = select.test_image
 
