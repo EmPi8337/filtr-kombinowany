@@ -119,7 +119,7 @@ def sobel(src: int, normalization: bool):
         # much faster but less accurate
         combinated_image = sum_of_abs(grad_v_left, grad_h_up)
 
-    return combinated_image, grad_v_left, grad_h_up
+    return combinated_image, grad_v_left, grad_h_up, img
 
 
 def euklides(grad_v_left: int, grad_h_up: int):

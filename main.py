@@ -31,9 +31,9 @@ def main():
     name = "tarnow_main_square.bmp"
     src = cv.imread(path+name, cv.IMREAD_COLOR)
 
-    x,y,z = Filter.sobel(src, False)
+    x, y, z, h = Filter.sobel(src, False)
 
-    display.show(x, y, z)
+    display.show(x, y, z, h)
 
 
 
