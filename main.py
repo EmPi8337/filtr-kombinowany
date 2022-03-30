@@ -27,8 +27,8 @@ def main():
 
     # load a image
     #image_name = './'+select.normalization_metod
-    path = "./images/architecture/"
-    name = "tarnow_main_square.bmp"
+    path = "./images/"+"vehicle/"
+    name = "car_2.bmp"
     src = cv.imread(path+name, cv.IMREAD_COLOR)
 
     x, y, z, h = Filter.sobel(src, False)
