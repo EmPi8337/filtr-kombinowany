@@ -1,4 +1,5 @@
 import cv2 as cv
+import numpy
 import numpy as np
 from cv2 import COLOR_BGR2GRAY, CV_64F
 
@@ -14,7 +15,7 @@ def prepare(src: int):
 
 def perwitt(src: int, normalization: bool):
     # get converted image
-    img = filter.prepare(src)
+    img = prepare(src)
     # initialize  kernels
     vertical = np.array([[-1, 0, 1],
                          [-1, 0, 1],
@@ -40,17 +41,17 @@ def perwitt(src: int, normalization: bool):
     """
 
     # normalize image
-    if normalization == False:
-        combinated_image = euklides(grad_v_left, grad_h_up)
-    elif normalization == True:
-        combinated_image = sum_of_abs(grad_v_left, grad_h_up)
 
-    return combinated_image
+
+    combinated_image_euklides = euklides(numpy.asarray(grad_v_left,float), numpy.asarray(grad_h_up,float))
+    combinated_image_sum_of_abs = sum_of_abs(grad_v_left, grad_h_up)
+
+    return combinated_image_euklides, combinated_image_sum_of_abs, grad_v_left, grad_h_up, img
 
 
 def roberts(src: int, normalization: bool):
     # get converted image
-    img = filter.prepare(src)
+    img = prepare(src)
     # initialize sobel gradients
     vertical = np.array([[0, 0, 0],
                          [-1, 0, 0],
@@ -75,13 +76,10 @@ def roberts(src: int, normalization: bool):
     #grad_h = np.add(grad_h_up, grad_h_down)
     """
 
-    # normalize image
-    if normalization == False:
-        combinated_image = euklides(grad_v_left, grad_h_up)
-    elif normalization == True:
-        combinated_image = sum_of_abs(grad_v_left, grad_h_up)
+    combinated_image_euklides = euklides(numpy.asarray(grad_v_left,float), numpy.asarray(grad_h_up,float))
+    combinated_image_sum_of_abs = sum_of_abs(grad_v_left, grad_h_up)
 
-    return combinated_image
+    return combinated_image_euklides, combinated_image_sum_of_abs, grad_v_left, grad_h_up, img
 
 
 def sobel(src: int, normalization: bool):
@@ -112,14 +110,10 @@ def sobel(src: int, normalization: bool):
     """
 
     # normalize image
-    if normalization == False:
-        # slower but better results
-        combinated_image = euklides(grad_v_left, grad_h_up)
-    elif normalization == True:
-        # much faster but less accurate
-        combinated_image = sum_of_abs(grad_v_left, grad_h_up)
+    combinated_image_euklides = euklides(grad_v_left, grad_h_up)
+    combinated_image_sum_of_abs = sum_of_abs(grad_v_left, grad_h_up)
 
-    return combinated_image, grad_v_left, grad_h_up, img
+    return combinated_image_euklides, combinated_image_sum_of_abs, grad_v_left, grad_h_up, img
 
 
 def euklides(grad_v_left: int, grad_h_up: int):
